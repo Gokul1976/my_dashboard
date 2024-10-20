@@ -1,0 +1,87 @@
+#include<stdio.h>
+
+int main() {
+    struct polynomial {
+        int ex;
+        int co;
+    } p1[10], p2[10], p3[10];
+    
+    int n1, n2, i, k = 0, j = 0;
+
+    // Input for the number of terms in polynomial 1
+    printf("Enter the number of terms of polynomial 1: ");
+    scanf("%d", &n1);
+
+    // Input for the number of terms in polynomial 2
+    printf("Enter the number of terms in polynomial 2: ");
+    scanf("%d", &n2);
+
+    // Input terms for polynomial 1
+    printf("Enter the terms of polynomial 1:\n");
+    for(i = 0; i < n1; i++) {
+        printf("Enter the coefficient for term %d: ", i+1);
+        scanf("%d", &p1[i].co);
+        printf("Enter the exponent for term %d: ", i+1);
+        scanf("%d", &p1[i].ex);
+    }
+
+    // Input terms for polynomial 2
+    printf("Enter the terms of polynomial 2:\n");
+    for(i = 0; i < n2; i++) {
+        printf("Enter the coefficient for term %d: ", i+1);
+        scanf("%d", &p2[i].co);
+        printf("Enter the exponent for term %d: ", i+1);
+        scanf("%d", &p2[i].ex);
+    }
+
+    i = 0; // Initialize i for polynomial 1
+    j = 0; // Initialize j for polynomial 2
+
+    // Adding polynomials
+    while(i < n1 && j < n2) {
+        if(p1[i].ex == p2[j].ex) {
+            p3[k].ex = p1[i].ex;
+            p3[k].co = p1[i].co + p2[j].co;
+            i++;
+            j++;
+            k++;
+        } else if(p1[i].ex > p2[j].ex) {
+            p3[k].co = p1[i].co;
+            p3[k].ex = p1[i].ex;
+            i++;
+            k++;
+        } else {
+            p3[k].co = p2[j].co;
+            p3[k].ex = p2[j].ex;
+            j++;
+            k++;
+        }
+    }
+
+    // Remaining terms of polynomial 1
+    while(i < n1) {
+        p3[k].co = p1[i].co;
+        p3[k].ex = p1[i].ex;
+        i++;
+        k++;
+    }
+
+    // Remaining terms of polynomial 2
+    while(j < n2) {
+        p3[k].co = p2[j].co;
+        p3[k].ex = p2[j].ex;
+        j++;
+        k++;
+    }
+
+    // Printing the resulting polynomial
+    printf("Resultant Polynomial: ");
+    for(i = 0; i < k; i++) {
+        printf("%dx^%d", p3[i].co, p3[i].ex);
+        if(i < k - 1) {
+            printf(" + ");
+        }
+    }
+    
+    return 0;
+}
